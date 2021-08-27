@@ -13,7 +13,7 @@ export default class AutonomousFruit {
       this.context = context;
       this.x = Math.floor(Math.random() * 325);
       this.y = 10;
-    }
+    }    
   
     move() {
       if(this.y < 200){
@@ -22,6 +22,10 @@ export default class AutonomousFruit {
         this.y *= 1.025
       }
     }
+
+    isOutOfScreen() {
+      return this.positionY > this.screenHeight;
+  }
   
     draw() {
       this.context.beginPath();
