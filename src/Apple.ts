@@ -1,6 +1,7 @@
-import AutonomousFruit from "./AutonomousFruit";
+import AutonomousObject from "./AutonomousObject";
 
-export default class Apple extends AutonomousFruit {
+export default class Apple extends AutonomousObject {
+    
     image: HTMLImageElement = new Image();
     constructor(context: CanvasRenderingContext2D) {
       super(context);

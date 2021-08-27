@@ -1,4 +1,4 @@
-export default class AutonomousFruit {
+export default class AutonomousObject {
     
     context: CanvasRenderingContext2D;
     x: number;
@@ -25,7 +25,7 @@ export default class AutonomousFruit {
 
     isOutOfScreen() {
       return this.positionY > this.screenHeight;
-  }
+    }
   
     draw() {
       this.context.beginPath();

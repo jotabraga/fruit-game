@@ -1,4 +1,4 @@
-import AutonomousFruit from "./AutonomousFruit";
+import AutonomousObject from "./AutonomousObject";
 
 export default class Player {
     x: number;
@@ -29,12 +29,12 @@ export default class Player {
       this.direction = direction;
     }
   
-    checkCollision(fallingObject: FallingObject) {
+    checkCollision(autonomousObject: AutonomousObject) {
       if (
-        this.x < fallingObject.x + 50 &&
-        this.x + 40 > fallingObject.x &&
-        this.y < fallingObject.y + 50 &&
-        this.y + 80 > fallingObject.y
+        this.x < autonomousObject.x + 50 &&
+        this.x + 40 > autonomousObject.x &&
+        this.y < autonomousObject.y + 50 &&
+        this.y + 80 > autonomousObject.y
       ) {
         return true;
       } else {
