@@ -1,11 +1,11 @@
 import AutonomousObject from "./AutonomousObject";
 import Alien from "./Alien";
-import Watermelon from "./watermelon";
-import Banana from "./banana";
-import Orange from "./orange";
-import Apple from "./apple";
-import Strawberry from "./strawberry";
-import Bomb from "./bomb";
+import Watermelon from "./Watermelon";
+import Banana from "./Banana";
+import Orange from "./Orange";
+import Apple from "./Apple";
+import Strawberry from "./Strawberry";
+import Bomb from "./Bomb";
 
 export default class Game {
   canvas: HTMLCanvasElement;
