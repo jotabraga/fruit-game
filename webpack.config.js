@@ -5,7 +5,7 @@ module.exports = {
     entry: './src/index.ts',
     output: {
         path: path.resolve(__dirname, 'public'),
-        filename: 'index.js',
+        filename: 'bundle.js',
     },
     resolve: {
         extensions: [".ts", ".js"]
