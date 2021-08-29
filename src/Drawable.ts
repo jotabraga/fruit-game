@@ -12,12 +12,14 @@ export default abstract class Drawable {
     canvas: HTMLCanvasElement,
     image: HTMLImageElement,
     positionX: number,
-    positionY: number
+    positionY: number,
+    imageWidth: number,
+    imageHeight: number
   ) {
     this.context = canvas.getContext("2d");
     this.image = image;
-    this.imageWidth = this.imageWidth;
-    this.imageHeight = this.imageHeight;
+    this.imageWidth = imageWidth;
+    this.imageHeight = imageHeight;
     this.positionX = positionX;
     this.positionY = positionY;
     this.screenWidth = canvas.width;
