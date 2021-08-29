@@ -1,4 +1,4 @@
-import Game from "./game";
+import Game from "./Game";
 
 const screenHeight = window.innerHeight;
 const canvas: HTMLCanvasElement = document.querySelector("#canvas");

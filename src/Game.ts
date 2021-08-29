@@ -13,7 +13,7 @@ export default class Game {
   screenHeight: number;
   context: CanvasRenderingContext2D;
   alien: Alien;
-  fallingObjects: AutonomousObject[];
+  autonomousObject: AutonomousObject[];
   score: number = 0;
   lifes: number = 4;
   gameIntervalId: NodeJS.Timer;
@@ -28,7 +28,7 @@ export default class Game {
   }
 
   start() {
-    this.fallingObjects = [];
+    this.autonomousObject = [];
     this.lifeImgElements.forEach((element) =>
       element.setAttribute("src", "./assets/heart.png")
     );
@@ -36,7 +36,7 @@ export default class Game {
     this.score = 0;
     this.scoreElement.innerHTML = `<p> Score: ${this.score} <p>`
     this.gameOverElement.setAttribute("class", "gameOver hide");
-    this.player = new Alien(this.context, this.screenWidth, this.screenHeight);
+    this.alien = new Alien(this.context, this.screenWidth, this.screenHeight);
     this.clearIntervals();
     this.gameIntervalId = setInterval(() => this.gameLoop(), 1000 / 60);
   }
@@ -47,10 +47,10 @@ export default class Game {
 
   gameLoop() {
     if (Math.random() >= 0.99) {
-      this.fallingObjects.push(this.generateNewObject());
+      this.autonomousObject.push(this.generateNewObject());
     }
     if (Math.random() >= 0.997) {
-      this.fallingObjects.push(new Bomb(this.context));
+      this.autonomousObject.push(new Bomb(this.context));
     }
     this.checkIfAlienIsDead();
     this.updateState();
@@ -79,7 +79,7 @@ export default class Game {
   }
 
   updateState() {
-    this.fallingObjects.forEach((fallingObject) => {
+    this.autonomousObject.forEach((fallingObject) => {
       fallingObject.move();
       if (this.player.checkCollision(fallingObject)) {
         if (fallingObject.theBanana) {
