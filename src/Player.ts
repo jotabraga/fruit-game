@@ -1,32 +1,37 @@
 import Drawable from "./Drawable";
 
-export default class Player {
-
+export default class Player extends Drawable {
   speed: number = 15;
   positionX: number = canvas.width / 2;
   positionY: number = canvas.height - 96;
 
-    
-  constructor(canvas: HTMLCanvasElement, image: HTMLImageElement){
-    super(canvas, image, this.positionX, this.positionY)
-  } 
+  constructor(canvas: HTMLCanvasElement, image: HTMLImageElement) {
+    super(canvas, image, this.positionX, this.positionY);
+  }
 
-  getCommandToMove (command: any){
-    if (command.key){
+  getCommandToMove(command: any) {
+    if (command.key) {
       const keyPressed = command.keyPressed;
-      const acceptedMoves: any = {ArrowLeft: true, ArrowRight: true};
+      const acceptedMoves: any = { ArrowLeft: true, ArrowRight: true };
       if (acceptedMoves[keyPressed]) return this.moveByArrowKey(command.key);
     }
 
-    if(command.touches){
-      return this.touchMove(e.touches[0].clientX);
+    if (command.touches) {
+      return this.moveByTouch(command.touches[0].clientX);
+    }
+  }
+
+  moveByArrowKey(keyPressed: string) {
+    if(keyPressed === 'ArrowLeft' && this.positionX > 0) {
+      this.positionX -= this.speed;
     }
 
+    if(keyPressed === 'ArrowRight' && this.positionX < canvas.width) {
+      this.positionX -= this.speed;
+    }
   }
 
-  moveByArrowKey(keyPressed: string){
-
+  moveByTouch (position: number) {
+    this.positionX = position;
   }
-
-  
-  }
+}

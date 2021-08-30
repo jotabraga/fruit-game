@@ -1,49 +1,23 @@
+import Player from "./Player";
 import Game from "./Game";
 
-const screenHeight = window.innerHeight;
 const canvas: HTMLCanvasElement = document.querySelector("#canvas");
-canvas.width = 375;
+const app: HTMLDivElement = document.querySelector("#app");
+const startButton = document.querySelector("#startButton");
+const loseText = document.querySelector("#lose");
+
+const screenWidth = app.clientWidth;
+const screenHeight = app.clientHeight;
+
+canvas.width = screenWidth;
 canvas.height = screenHeight;
-canvas.style.backgroundColor = "#181820";
-const game = new Game(screenHeight, canvas);
 
-const mouseButton: HTMLElement = document.querySelector(".mouseButton");
-mouseButton.addEventListener("click", () => {
-  selectMouse();
-});
+const alien = document.querySelector("#alien") as HTMLImageElement;
+const player = new Player(canvas, alien);
+const game = new Game(canvas, player, lifes, score, loseText);
 
-const keyboardButton: HTMLElement = document.querySelector(".keyboardButton");
-keyboardButton.addEventListener("click", () => {
-  selectKeyboard();
-});
+window.setTimeout(() => player.draw(), 100);
+window.addEventListener('keydown', (e) => player.getCommandToMove(e));
+canvas.addEventListener('touchmove', (e) => player.getCommandToMove(e));
 
-function hideInstructions() {
-  const hide = document.querySelector(".selectController");
-  hide.setAttribute("class", "selectController hide");
-}
-
-function selectMouse() {
-  hideInstructions();
-  game.start();
-  canvas.addEventListener("mousemove", (e) => {
-    game.player.mouseMove(e.offsetX);
-  });
-}
-
-function selectKeyboard() {
-  hideInstructions();
-  game.start();
-  canvas.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowRight") {
-      game.player.setDirection(1);
-      game.player.move();
-    } else if (e.key === "ArrowLeft") {
-      game.player.setDirection(-1);
-      game.player.move();
-    }
-  });
-}
-
-canvas.addEventListener("click", () => {
-  game.start();
-});
+startButton.addEventListener("click", () => game.start());
