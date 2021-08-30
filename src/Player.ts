@@ -1,12 +1,15 @@
 import Drawable from "./Drawable";
 
 export default class Player extends Drawable {
+
   speed: number = 15;
+  width: number = 80;
+  height: number = 100;
   positionX: number = canvas.width / 2;
-  positionY: number = canvas.height - 96;
+  positionY: number = canvas.height - this.height -30;
 
   constructor(canvas: HTMLCanvasElement, image: HTMLImageElement) {
-    super(canvas, image, this.positionX, this.positionY);
+    super(canvas, image, this.positionX, this.positionY, 80, 100);
   }
 
   getCommandToMove(command: any) {
@@ -27,7 +30,7 @@ export default class Player extends Drawable {
     }
 
     if(keyPressed === 'ArrowRight' && this.positionX < canvas.width) {
-      this.positionX -= this.speed;
+      this.positionX += this.speed;
     }
   }
 

@@ -16,13 +16,12 @@ export default class Game {
   score: number = 0;
   loseText: Element;
 
-  constructor(canvas: HTMLCanvasElement, player: Player, lifes: Lifes, score: Score, loseText: Element) {
+  constructor(canvas: HTMLCanvasElement, player: Player) {
       this.canvas = canvas;
       this.player = player;
       this.context = canvas.getContext('2d');
       this.screenHeight = canvas.height;
       this.screenWidth = canvas.width;
-      this.loseText = loseText;
   }
 
   start() {
@@ -41,15 +40,13 @@ export default class Game {
       this.checkCollisions();
       this.render();
 
-      if (this.lifes.lifesQuantity <= 0 || this.score.score < 0) this.end();
+      if (this.lifes <= 0 || this.score < 0) this.end();
   }
 
   render() {
       this.context.clearRect(0, 0, this.screenWidth, this.screenHeight);
       this.player.draw();
       this.objects.forEach(object => object.draw());
-      this.score.draw();
-      this.lifes.draw();
   }
 
   checkCollisions() {

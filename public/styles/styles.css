@@ -8,3 +8,75 @@
     align-items: center;
     margin: 0;
   }
+  .topbar {
+    width: 375px;
+    background: black;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    padding: 10px;
+    z-index: 10;
+    height: 65px;
+    top: 0;
+  }
+  .heartConteiner {
+    width: 50%;
+  }
+  img {
+    height: 35px;
+  }
+  p {
+    font-size: 30px;
+  }
+  .selectController {
+    position: fixed;
+    background: black;
+    color: white;
+    padding: 0 20px;
+    top: 30%;
+    left: calc(50% - 187px);
+    width: 375px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .selectController.hide {
+    display: none;
+  }
+  button {
+    margin: 20px;
+    font-size: 22px;
+    border-radius: 10px;
+    width: 100px;
+    height: 30px;
+  }
+  h2 {
+    font-size: 16px;
+  }
+  .ground-line {
+    background: grey;
+    position: fixed;
+    bottom: 15px;
+    border-radius: 50px;
+    height: 1px;
+    width: 365px;
+  }
+  .gameOver {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 30px;
+    height: 200px;
+    width: 375px;
+    background: black;
+  }
+  .gameOver.hide {
+    display: none;
+  }

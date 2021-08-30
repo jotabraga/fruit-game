@@ -14,7 +14,7 @@ canvas.height = screenHeight;
 
 const alien = document.querySelector("#alien") as HTMLImageElement;
 const player = new Player(canvas, alien);
-const game = new Game(canvas, player, lifes, score, loseText);
+const game = new Game(canvas, player, loseText);
 
 window.setTimeout(() => player.draw(), 100);
 window.addEventListener('keydown', (e) => player.getCommandToMove(e));
