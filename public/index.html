@@ -13,29 +13,32 @@
   </head>
 
   <body>
-    
-    <canvas id="canvas" />
+    <div id="gamePlay">
 
-    <div class="topbar">
-      <div class="heartConteiner">
-        <img class="full" src="assets/full-heart.png" />
-        <img class="full" src="assets/full-heart.png" />
-        <img class="full" src="assets/full-heart.png" />
-        <img class="full" src="assets/full-heart.png" />
+      <canvas id="canvas"> </canvas>
+
+      <div class="topbar">
+        <div class="heartConteiner">
+          <img class="full" src="assets/full-heart.png" />
+          <img class="full" src="assets/full-heart.png" />
+          <img class="full" src="assets/full-heart.png" />
+          <img class="full" src="assets/full-heart.png" />
+        </div>
+        <p class="score">Score: 0</p>
+      </div>       
+      
+      <div class="instructions">
+        <h2>
+          -Touch the screen or use the arrows to move the alien <br />
+          -Catch the fruits <br />
+          -Don't touch the bombs <br />
+          -Click to restart the game
+        </h2>
       </div>
-      <p class="score">Score: 0</p>
-    </div> 
-    
-    <div class="instructions">
-      <h2>
-        Instructions: <br />-Mouse or keyboard arrows controls the alien <br />
-        -Catch the fruits <br />
-        -Avoid the bombs <br />
-        -Click to restart the game
-      </h2>
-    </div>
+  
+      <div class="ground-line"></div>
 
-    <div class="ground-line"></div>
+    </div>
 
     <div style="display: none;">
       <img id="alien" alt="alien" src="assets/alien.png"/>

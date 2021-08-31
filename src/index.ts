@@ -1,4 +1,4 @@
-import Player from "./Player";
+import Player from "./player";
 import Game from "./Game";
 
 const canvas: HTMLCanvasElement = document.querySelector("#canvas");
@@ -22,9 +22,7 @@ function hideInitialInstructions() {
 window.setTimeout(() => player.draw(), 100);
 window.addEventListener('keydown', (e) => player.getCommandToMove(e));
 canvas.addEventListener('touchmove', (e) => player.getCommandToMove(e));
-canvas.addEventListener("click", () =>  
-    {
+canvas.addEventListener("click", () => {
     hideInitialInstructions();
     game.start();
-    }
-);
+});

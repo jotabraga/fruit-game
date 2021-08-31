@@ -20,6 +20,7 @@
     z-index: 10;
     height: 65px;
     top: 0;
+    left: calc(50% - 187px);
   }
   .heartConteiner {
     width: 50%;
@@ -39,10 +40,10 @@
     left: calc(50% - 187px);
     width: 375px;
     height: auto;
-    display: flex;
     flex-direction: column;
-    justify-content: center;
+    display: flex;
     align-items: center;
+    justify-content: space-between;
   }
 
   .instructions.hide {
