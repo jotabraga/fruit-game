@@ -5,14 +5,13 @@ export default class Player extends Drawable {
   speed: number = 15;
   width: number = 80;
   height: number = 100;
-  positionX: number = canvas.width / 2;
-  positionY: number = canvas.height - this.height -30;
 
   constructor(canvas: HTMLCanvasElement, image: HTMLImageElement) {
-    super(canvas, image, this.positionX, this.positionY, 80, 100);
+    super(canvas, image, canvas.width / 2, canvas.height - 97, 80, 100);
   }
 
   getCommandToMove(command: any) {
+    console.log("entrou");
     if (command.key) {
       const keyPressed = command.keyPressed;
       const acceptedMoves: any = { ArrowLeft: true, ArrowRight: true };
@@ -29,7 +28,7 @@ export default class Player extends Drawable {
       this.positionX -= this.speed;
     }
 
-    if(keyPressed === 'ArrowRight' && this.positionX < canvas.width) {
+    if(keyPressed === 'ArrowRight' && this.positionX < this.screenWidth) {
       this.positionX += this.speed;
     }
   }

@@ -37,6 +37,17 @@ export default class Game {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
+  // updateScore(newScore){
+  //   const divScore = document.querySelector(".score") as HTMLElement;
+
+  //   if (newScore === 2*this.score){
+  //     divScore.classList.add("highlight");
+  //     setTimeout(() => divScore.classList.remove("highlight"), 200);
+  //   }
+  //   this.score = newScore;
+  //   divScore.innerHTML = "Score: " + this.score.toFixed(1);
+  // }
+
   end() {
     this.clearIntervals();
     this.gameOverText.setAttribute("class", "gameOver");

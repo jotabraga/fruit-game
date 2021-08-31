@@ -2,27 +2,24 @@ import Player from "./player";
 import Game from "./Game";
 
 const canvas: HTMLCanvasElement = document.querySelector("#canvas");
-const app: HTMLDivElement = document.querySelector("#app");
-
-const screenWidth = app.clientWidth;
-const screenHeight = app.clientHeight;
-
+const gamePlay: HTMLDivElement = document.querySelector("#gamePlay");
+const screenWidth = gamePlay.clientWidth;
+const screenHeight = gamePlay.clientHeight;
 canvas.width = screenWidth;
 canvas.height = screenHeight;
-
 const alien = document.querySelector("#alien") as HTMLImageElement;
 const player = new Player(canvas, alien);
 const game = new Game(canvas, player);
+const instructionToHide = document.querySelector(".instructions");
 
 function hideInitialInstructions() {
-    const instructionToHide = document.querySelector(".instructions");
-    instructionToHide.setAttribute("class", "instructions hide");
+  instructionToHide.setAttribute("class", "instructions hide");
 }
 
-window.setTimeout(() => player.draw(), 100);
-window.addEventListener('keydown', (e) => player.getCommandToMove(e));
-canvas.addEventListener('touchmove', (e) => player.getCommandToMove(e));
-canvas.addEventListener("click", () => {
-    hideInitialInstructions();
-    game.start();
+instructionToHide.addEventListener("click", () => {
+  hideInitialInstructions();
+  game.start();
 });
+window.setTimeout(() => player.draw(), 100);
+window.addEventListener("keydown", (e) => player.getCommandToMove(e));
+canvas.addEventListener("touchmove", (e) => player.getCommandToMove(e));
