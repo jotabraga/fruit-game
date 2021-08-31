@@ -30,7 +30,7 @@
   p {
     font-size: 30px;
   }
-  .selectController {
+  .instructions {
     position: fixed;
     background: black;
     color: white;
@@ -45,7 +45,7 @@
     align-items: center;
   }
 
-  .selectController.hide {
+  .instructions.hide {
     display: none;
   }
   button {
