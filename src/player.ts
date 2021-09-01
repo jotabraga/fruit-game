@@ -11,9 +11,10 @@ export default class Player extends Drawable {
   }
 
   getCommandToMove(command: any) {
-    console.log("entrou");
+    
     if (command.key) {
-      const keyPressed = command.keyPressed;
+      const keyPressed = command.key;
+      console.log(command);
       const acceptedMoves: any = { ArrowLeft: true, ArrowRight: true };
       if (acceptedMoves[keyPressed]) return this.moveByArrowKey(command.key);
     }
@@ -28,7 +29,7 @@ export default class Player extends Drawable {
       this.positionX -= this.speed;
     }
 
-    if(keyPressed === 'ArrowRight' && this.positionX < this.screenWidth) {
+    if(keyPressed === 'ArrowRight' && this.positionX < this.screenWidth - 80) {
       this.positionX += this.speed;
     }
   }
