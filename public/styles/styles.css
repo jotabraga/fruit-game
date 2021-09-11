@@ -49,7 +49,6 @@
     align-items: center;
     justify-content: space-between;
   }
-
   .instructions.hide {
     display: none;
   }
@@ -72,10 +71,10 @@
   .ground-line {
     background: grey;
     position: fixed;
-    bottom: 15px;
+    bottom: 95px;
     border-radius: 50px;
     height: 1px;
-    width: 365px;
+    width: 375px;
   }
   .gameOver {
     position: fixed;
