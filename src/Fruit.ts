@@ -1,6 +1,6 @@
-import AutonomousObject from "./AutonomousObject";
+import FallingObject from "./FallingObject";
 
-export default abstract class Fruit extends AutonomousObject {
+export default abstract class Fruit extends FallingObject {
   constructor(
     canvas: HTMLCanvasElement,
     imagePath: HTMLImageElement,
