@@ -1,8 +1,14 @@
 import Player from "./player";
+import FallingObject from "./FallingObject";
+import Fruit from "./Fruit";
+import FruitsList from "./Fruits/FruitsList";
+import Bomb from "./Bomb";
 
 export default class Game {
   player: Player;
   gameIntervalId: number;
+  bombIntervalId: number;
+  fruitIntervalId: number;
   canvas: HTMLCanvasElement;
   context: CanvasRenderingContext2D;
   screenWidth: number;
@@ -10,6 +16,7 @@ export default class Game {
   lives: number = 4;
   score: number = 0;
   gameOverText: HTMLElement = document.querySelector(".gameOver");
+  fallingObjects: FallingObject[] = [];
 
   constructor(canvas: HTMLCanvasElement, player: Player) {
     this.canvas = canvas;
@@ -21,6 +28,7 @@ export default class Game {
 
   start() {
     this.gameIntervalId = window.setInterval(() => this.loop(), 1000 / 60);
+    this.fruitIntervalId = window.setInterval(() => this.dropFruit(), 700);
   }
 
   loop() {
@@ -31,6 +39,28 @@ export default class Game {
   render() {
     this.clearScreen();
     this.player.draw();
+  }
+
+  dropFruit() {
+    const randomFruit = this.getAleatoryFruit();
+  }
+
+  getAleatoryFruit() {
+    let fruit;
+    const aleatoryNumber = this.drawnNumber();
+    if (aleatoryNumber > 70) fruit = new FruitsList.Orange(this.canvas);
+    if (aleatoryNumber > 40 && aleatoryNumber <= 70)
+      fruit = new FruitsList.Apple(this.canvas);
+    if (aleatoryNumber > 20 && aleatoryNumber <= 40)
+      fruit = new FruitsList.Watermelon(this.canvas);
+    if (aleatoryNumber > 5 && aleatoryNumber <= 20)
+      fruit = new FruitsList.Strawberry(this.canvas);
+    if (aleatoryNumber <= 5) fruit = new FruitsList.Banana(this.canvas);
+    this.fallingObjects.push(fruit);
+  }
+
+  drawnNumber() {
+    return Math.random() * 100;
   }
 
   clearScreen() {
