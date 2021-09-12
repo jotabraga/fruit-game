@@ -1,8 +1,6 @@
 import Player from "./player";
 import FallingObject from "./FallingObject";
-import Fruit from "./Fruit";
 import FruitsList from "./Fruits/FruitsList";
-import Bomb from "./Bomb";
 
 export default class Game {
   player: Player;
@@ -33,6 +31,7 @@ export default class Game {
 
   loop() {
     this.render();
+    this.fallingObjects.forEach((object) => object.draw());
     if (this.lives <= 0) this.end();
   }
 
@@ -66,17 +65,6 @@ export default class Game {
   clearScreen() {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
-
-  // updateScore(newScore){
-  //   const divScore = document.querySelector(".score") as HTMLElement;
-
-  //   if (newScore === 2*this.score){
-  //     divScore.classList.add("highlight");
-  //     setTimeout(() => divScore.classList.remove("highlight"), 200);
-  //   }
-  //   this.score = newScore;
-  //   divScore.innerHTML = "Score: " + this.score.toFixed(1);
-  // }
 
   end() {
     this.clearIntervals();

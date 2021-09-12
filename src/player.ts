@@ -1,7 +1,6 @@
 import Drawable from "./Drawable";
 
 export default class Player extends Drawable {
-
   speed: number = 15;
   width: number = 80;
   height: number = 100;
@@ -11,10 +10,8 @@ export default class Player extends Drawable {
   }
 
   getCommandToMove(command: any) {
-    
     if (command.key) {
       const keyPressed = command.key;
-      console.log(command);
       const acceptedMoves: any = { ArrowLeft: true, ArrowRight: true };
       if (acceptedMoves[keyPressed]) return this.moveByArrowKey(command.key);
     }
@@ -25,16 +22,16 @@ export default class Player extends Drawable {
   }
 
   moveByArrowKey(keyPressed: string) {
-    if(keyPressed === 'ArrowLeft' && this.positionX > 0) {
+    if (keyPressed === "ArrowLeft" && this.positionX > 0) {
       this.positionX -= this.speed;
     }
 
-    if(keyPressed === 'ArrowRight' && this.positionX < this.screenWidth - 80) {
+    if (keyPressed === "ArrowRight" && this.positionX < this.screenWidth - 80) {
       this.positionX += this.speed;
     }
   }
 
-  moveByTouch (position: number) {
+  moveByTouch(position: number) {
     this.positionX = position;
   }
 }
