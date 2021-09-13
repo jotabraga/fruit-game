@@ -10,19 +10,12 @@ export default abstract class FallingObject extends Drawable {
     sizeX: number,
     sizeY: number
   ) {
-    super(
-      canvas,
-      imagePath,
-      Math.random() * (canvas.width),
-      -70,
-      sizeX,
-      sizeY
-    );
+    super(canvas, imagePath, Math.random() * canvas.width, -70, sizeX, sizeY);
   }
   move() {
     this.positionY += this.speedY;
   }
-  outOfScreen() {
+  isOutOfScreen() {
     return this.positionY > this.screenHeight;
   }
   attPoints(points: number) {

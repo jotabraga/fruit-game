@@ -6,6 +6,6 @@ export default class Banana extends Fruit {
     super(canvas, banana, 61, 67);
   }
   increaseScore(points: number) {
-    return points*2;
+    return points * 2;
   }
 }

@@ -30,18 +30,31 @@ export default class Game {
   }
 
   loop() {
+    this.updateState();
     this.render();
-    this.fallingObjects.forEach((object) => object.draw());
     if (this.lives <= 0) this.end();
   }
 
+  updateState() {
+    this.fallingObjects.forEach((object) => object.move());
+    this.fallingObjects.forEach((object) => {
+      if (object.isOutOfScreen()) {
+        this.fallingObjects = this.fallingObjects.filter(
+          (obj) => obj !== object
+        );
+      }
+    });
+  }
+
   render() {
-    this.clearScreen();
+    this.context.clearRect(0, 0, this.screenWidth, this.screenHeight);
     this.player.draw();
+    this.fallingObjects.forEach((object) => object.draw());
   }
 
   dropFruit() {
     const randomFruit = this.getAleatoryFruit();
+    this.fallingObjects.push(randomFruit);
   }
 
   getAleatoryFruit() {
@@ -55,7 +68,7 @@ export default class Game {
     if (aleatoryNumber > 5 && aleatoryNumber <= 20)
       fruit = new FruitsList.Strawberry(this.canvas);
     if (aleatoryNumber <= 5) fruit = new FruitsList.Banana(this.canvas);
-    this.fallingObjects.push(fruit);
+    return fruit;
   }
 
   drawnNumber() {
@@ -73,5 +86,6 @@ export default class Game {
 
   clearIntervals() {
     clearInterval(this.gameIntervalId);
+    clearInterval(this.fruitIntervalId);
   }
 }
