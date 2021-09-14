@@ -1,11 +1,10 @@
-import AutonomousObject from "./AutonomousObject";
-import FallingObject from "./fallingObject";
+import FallingObject from "./FallingObject";
 
-export default class Bomb extends AutonomousObject {
-  theBomb: boolean = true;
-  image: HTMLImageElement = new Image();
-  constructor(context: CanvasRenderingContext2D) {
-    super(context);
-    this.image.src = "./assets/bomb.png";
+const bomb = document.querySelector("#bomb") as HTMLImageElement;
+export default class Bomb extends FallingObject {
+  constructor(canvas: HTMLCanvasElement) {
+    super(canvas, bomb, 55, 55);
+    this.points = 0;
+    this.speedY = 4;
   }
 }

@@ -1,159 +1,91 @@
-import AutonomousObject from "./AutonomousObject";
-import Alien from "./Alien";
-import Watermelon from "./Watermelon";
-import Banana from "./Banana";
-import Orange from "./Orange";
-import Apple from "./Apple";
-import Strawberry from "./Strawberry";
-import Bomb from "./Bomb";
+import Player from "./player";
+import FallingObject from "./FallingObject";
+import FruitsList from "./Fruits/FruitsList";
 
 export default class Game {
+  player: Player;
+  gameIntervalId: number;
+  bombIntervalId: number;
+  fruitIntervalId: number;
   canvas: HTMLCanvasElement;
-  screenWidth: number = 375;
-  screenHeight: number;
   context: CanvasRenderingContext2D;
-  alien: Alien;
-  autonomousObject: AutonomousObject[];
+  screenWidth: number;
+  screenHeight: number;
+  lives: number = 4;
   score: number = 0;
-  lifes: number = 4;
-  gameIntervalId: NodeJS.Timer;
-  scoreElement: HTMLElement = document.querySelector(".score");
-  lifeImgElements = document.querySelectorAll(".full");
-  gameOverElement: HTMLElement = document.querySelector(".gameOver");
+  gameOverText: HTMLElement = document.querySelector(".gameOver");
+  fallingObjects: FallingObject[] = [];
 
-  constructor(screenHeight: number, canvas: HTMLCanvasElement) {
+  constructor(canvas: HTMLCanvasElement, player: Player) {
     this.canvas = canvas;
-    this.screenHeight = screenHeight;
+    this.player = player;
     this.context = canvas.getContext("2d");
+    this.screenHeight = canvas.height;
+    this.screenWidth = canvas.width;
   }
 
   start() {
-    this.autonomousObject = [];
-    this.lifeImgElements.forEach((element) =>
-      element.setAttribute("src", "./assets/heart.png")
-    );
-    this.lifes = 4;
-    this.score = 0;
-    this.scoreElement.innerHTML = `<p> Score: ${this.score} <p>`
-    this.gameOverElement.setAttribute("class", "gameOver hide");
-    this.alien = new Alien(this.context, this.screenWidth, this.screenHeight);
-    this.clearIntervals();
-    this.gameIntervalId = setInterval(() => this.gameLoop(), 1000 / 60);
+    this.gameIntervalId = window.setInterval(() => this.loop(), 1000 / 60);
+    this.fruitIntervalId = window.setInterval(() => this.dropFruit(), 700);
   }
 
-  clearIntervals() {
-    clearInterval(this.gameIntervalId);
-  }
-
-  gameLoop() {
-    if (Math.random() >= 0.99) {
-      this.autonomousObject.push(this.generateNewObject());
-    }
-    if (Math.random() >= 0.997) {
-      this.autonomousObject.push(new Bomb(this.context));
-    }
-    this.checkIfAlienIsDead();
+  loop() {
     this.updateState();
-    this.renderGame();
-  }
-
-  checkIfAlienIsDead() {
-    if (this.lifes <= 0) {
-      this.endGame();
-    }
-  }
-
-  generateNewObject() {
-    const randomPercentage = Math.random();
-    if (randomPercentage < 0.3) {
-      return new Orange(this.context);
-    } else if (randomPercentage < 0.6) {
-      return new Apple(this.context);
-    } else if (randomPercentage < 0.8) {
-      return new Watermelon(this.context);
-    } else if (randomPercentage < 0.95) {
-      return new Strawberry(this.context);
-    } else {
-      return new Banana(this.context);
-    }
+    this.render();
+    if (this.lives <= 0) this.end();
   }
 
   updateState() {
-    this.autonomousObject.forEach((fallingObject) => {
-      fallingObject.move();
-      if (this.player.checkCollision(fallingObject)) {
-        if (fallingObject.theBanana) {
-          this.removeFallingObject(fallingObject);
-          this.score *= 2;
-          return (this.scoreElement.innerHTML = `<p> Score: ${this.score} <p>`);
-        } else if (fallingObject.theBomb) {
-          this.removeFallingObject(fallingObject);
-          return this.endGame();
-        } else {
-          this.removeFallingObject(fallingObject);
-          this.score += fallingObject.points;
-          return (this.scoreElement.innerHTML = `<p> Score: ${this.score} <p>`);
-        }
-      }
-      this.removeOnGroundCollision(fallingObject);
-    });
-  }
-
-  removeOnGroundCollision(fallingObject: AutonomousObject) {
-    if (this.checkGroundCollision(fallingObject)) {
-      if (!fallingObject.theBomb) {
-        this.lifeImgElements[this.lifes - 1].setAttribute(
-          "src",
-          "./assets/heart-empty.png"
+    this.fallingObjects.forEach((object) => object.move());
+    this.fallingObjects.forEach((object) => {
+      if (object.isOutOfScreen()) {
+        this.fallingObjects = this.fallingObjects.filter(
+          (obj) => obj !== object
         );
-        this.lifes--;
-      }
-      this.removeFallingObject(fallingObject);
-    }
-  }
-
-  checkGroundCollision(fallingObject: AutonomousObject) {
-    if (fallingObject.y + 50 > this.screenHeight) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  removeFallingObject(objectToRemove: AutonomousObject) {
-    this.fallingObjects = this.fallingObjects.filter((fallingObject) => {
-      if (fallingObject === objectToRemove) {
-        return false;
-      } else {
-        return true;
       }
     });
   }
 
-  endGame() {
-    this.clearIntervals();
-    this.gameOverElement.setAttribute("class", "gameOver");
-    console.log("fim de jogo");
+  render() {
+    this.context.clearRect(0, 0, this.screenWidth, this.screenHeight);
+    this.player.draw();
+    this.fallingObjects.forEach((object) => object.draw());
   }
 
-  renderGame() {
-    this.clearScreen();
-    const image = new Image();
-    image.src = "./assets/moon.png";
-    this.context.beginPath();
-    this.context.drawImage(
-      image,
-      -400,
-      this.screenHeight < 900 ? -100 : 0,
-      1200,
-      this.screenHeight < 900 ? 900 : this.screenHeight
-    );
-    this.context.fill();
-    this.fallingObjects.forEach((fallingObject) => fallingObject.draw());
-    this.player.draw();
+  dropFruit() {
+    const randomFruit = this.getAleatoryFruit();
+    this.fallingObjects.push(randomFruit);
+  }
+
+  getAleatoryFruit() {
+    let fruit;
+    const aleatoryNumber = this.drawnNumber();
+    if (aleatoryNumber > 70) fruit = new FruitsList.Orange(this.canvas);
+    if (aleatoryNumber > 40 && aleatoryNumber <= 70)
+      fruit = new FruitsList.Apple(this.canvas);
+    if (aleatoryNumber > 20 && aleatoryNumber <= 40)
+      fruit = new FruitsList.Watermelon(this.canvas);
+    if (aleatoryNumber > 5 && aleatoryNumber <= 20)
+      fruit = new FruitsList.Strawberry(this.canvas);
+    if (aleatoryNumber <= 5) fruit = new FruitsList.Banana(this.canvas);
+    return fruit;
+  }
+
+  drawnNumber() {
+    return Math.random() * 100;
   }
 
   clearScreen() {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  }
+
+  end() {
+    this.clearIntervals();
+    this.gameOverText.setAttribute("class", "gameOver");
+  }
+
+  clearIntervals() {
+    clearInterval(this.gameIntervalId);
+    clearInterval(this.fruitIntervalId);
   }
 }

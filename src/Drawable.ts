@@ -25,7 +25,6 @@ export default abstract class Drawable {
     this.screenWidth = canvas.width;
     this.screenHeight = canvas.height;
   }
-
   draw() {
     this.context.drawImage(
       this.image,
