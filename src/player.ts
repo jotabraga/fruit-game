@@ -1,4 +1,5 @@
 import Drawable from "./Drawable";
+import FallingObject from "./FallingObject";
 
 export default class Player extends Drawable {
   speed: number = 15;
@@ -33,5 +34,11 @@ export default class Player extends Drawable {
 
   moveByTouch(position: number) {
     this.positionX = position;
+  }
+
+  checkCollision(object: FallingObject) {
+    const distance = Math.sqrt((this.positionX - object.positionX) ** 2 +
+    (this.positionY - object.positionY) ** 2);
+    return distance < this.height / 2 + object.imageHeight / 2;
   }
 }
