@@ -75,6 +75,22 @@ export default class Game {
     return Math.random() * 100;
   }
 
+  checkCollisions() {
+    this.fallingObjects.forEach((object) => {
+      if (this.player.checkCollision(object)) {
+        const updatedScore = object.attPoints(this.score)
+        this.updateScore(updatedScore);
+        this.fallingObjects = this.fallingObjects.filter(
+          (obj) => obj !== object
+        );
+      }
+    });
+  }
+
+  updateScore(points: number) {
+    this.score = points;
+  }
+
   clearScreen() {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
