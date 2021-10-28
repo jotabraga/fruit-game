@@ -2,7 +2,7 @@ import Drawable from "./Drawable";
 import FallingObject from "./FallingObject";
 
 export default class Player extends Drawable {
-  speed: number = 15;
+  speed: number = 25;
   width: number = 80;
   height: number = 100;
 
