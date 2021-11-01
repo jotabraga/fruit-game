@@ -44,6 +44,7 @@ export default class Game {
         );
       }
     });
+    this.checkCollisions();
   }
 
   render() {
@@ -98,7 +99,7 @@ export default class Game {
   end() {
     this.clearIntervals();
     this.gameOverText.setAttribute("class", "gameOver");
-  }
+  } 
 
   clearIntervals() {
     clearInterval(this.gameIntervalId);
